@@ -17,6 +17,10 @@
 
 /*          Funciones                   */
 
+/* verificacionpuntnum
+ *  Esta función se encargara de verificar si la cadena de caracteres introducida posee solo puntos 
+ * y numeros
+*/
 int verificacionpuntnum(char *ip){
     int i,a;
     i=0;
@@ -35,6 +39,11 @@ int verificacionpuntnum(char *ip){
         }
     return a;
 }
+
+/*ipHexa
+ * Función encargada de recibir una ip tipo xxx.yyy.zzz.uuu y devolverla
+ * como un numero hexadecimal
+*/
 
 int ipHexa(char *ip){
     int despx = 24;
@@ -63,6 +72,10 @@ int ipHexa(char *ip){
         return 0;
     }
 }
+
+/*verfArg
+ * Función encargada de verificar la cantidad de argumentos introducidos en el main
+*/
 
 int verfArg(int r){
     if(r != 2){

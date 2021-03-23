@@ -18,14 +18,14 @@ int main(int argc, char *argv[])
     int a;
     char ipusuario[16];
 
-    a = verfArg(argc);
+    a = verfArg(argc);  //Verificación de cantidad de argumentos
     if( a == 0){
         strcpy(ipusuario,argv[1]); // Se almacena el string de entrada como una cadena de caracteres
 
-        a = verificacionpuntnum(ipusuario);
+        a = verificacionpuntnum(ipusuario); // Verificación de carateres de los argumentos
         
         if(a==0){
-            ipHexa(ipusuario);            
+            ipHexa(ipusuario);   //IP introducida en Hexadecimal         
         }
         else{
             printf(ROJO_T "ERROR:\tVerifique si introdujo algún caracter no permitido\n\t" MAGENTA_T "Los caracteres permitidos son . y numeros\n\tNo comience ni termine con un punto\n");
