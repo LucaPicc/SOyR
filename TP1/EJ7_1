@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir $HOME/$1
+
+cp /etc/*.conf $HOME/$1/
