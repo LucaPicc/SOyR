@@ -1,5 +1,37 @@
 #!/bin/bash
+#----------- Entregable EJ7 G10 -------------#
+# Autores:                                   #
+#   - Moreyra Iñigo, Juan Martin             #
+#   - Piccinini, Luca                        #
+#   - Taboada, Rodney                        #
+#                                            #
+# Descripcion:                               #
+#   Programa correspondiente al entregable   # 
+# del TP1 de SOYR                            #
+#                                            #
+#--------------------------------------------#
 
-mkdir $HOME/$1
 
-cp /etc/*.conf $HOME/$1/
+if [ $# -eq 2 ];
+then
+    dir=$HOME/$1
+    
+    mkdir $dir
+
+    cp /etc/*.conf $dir
+
+    chmod go-rwx $dir/??g*
+    
+    ls -l $dir > $dir/intermedio
+    sed -i -e "1d" $dir/intermedio
+    
+    echo -e Primeros 5 archivos en orden creciente por tamaño \\n > $dir/$2
+    cat $dir/intermedio | sort -n -k 5 | head -n5 >> $dir/$2
+    echo -e \\n Ultimos 5 archivos ordenados alfabeticamente en orden decreciente \\n >> $dir/$2
+    cat $dir/intermedio | sort -f -r -k 9 | tail -n5  >> $dir/$2
+    
+    rm $dir/intermedio
+else
+    echo numero de argumentos erroneos
+fi
+
