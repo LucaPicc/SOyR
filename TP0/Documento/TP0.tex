@@ -1,0 +1,106 @@
+\documentclass[12pt,a4paper]{article} %Formato de plantilla que vamos a usar
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[margin=2cm,top=2cm,bottom =2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{listingsutf8}
+
+%Variables
+\newcommand{\materia}{SISTEMAS OPERATIVOS Y REDES 2021}
+\newcommand{\Date}{23 de Marzo de 2021}
+\newcommand{\logofacu}{logo-unlp.png}
+\newcommand{\unlp}{logo-universidad}
+\newcommand{\ing}{logo-ing}
+
+%Definición de colores
+\definecolor{colorfacu}{HTML}{4373bf}
+
+%Adicionales
+\setlength{\headheight}{50px}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\includegraphics[width=4cm]{\unlp}}
+\rhead{\includegraphics[width=4cm]{\ing}}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{colorfacu}\leaders\hrule height \headrulewidth\hfill}}
+
+%Formato para codigo
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=single,
+  %xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+
+\begin{document}
+	\cfoot{\thepage}
+	\begin{titlepage}
+	\centering                 
+	\includegraphics[width=0.8\textwidth]{\logofacu}\par\vspace{1cm}
+	{\scshape\LARGE \textbf{\materia}}\par\vspace{0.2cm}
+	{\Huge\bfseries\textcolor{colorfacu}{TP n°0 G10}}\par\vspace{1cm}
+	{\large Moreyra Iñigo, Juan Martín
+66664/6}\par\vspace{0.2cm}
+	{\large Luca Piccinini 63207/0}\par\vspace{0.2cm}
+	{\large Taboada Rodney 58206/5}\par\vspace{0.2cm}
+	{\large \Date\par}
+	\end{titlepage}
+%-------------------------------------------------------------------------------------------------	
+	\clearpage
+	\tableofcontents
+	\clearpage
+%---- Inicio de Documento-----------------%
+	\section{Introducción}
+	En este informe se detallara la realización de un programa que permita ingresar por línea de comando un numero IP en notación decimal, es decir un numero con el formato xxx.yyy.zzz.uuu y luego lo convierta en un número entero de 32 bits. El programa debe validar que el número ingresado sea efectivamente un número IP (los campos de 3 dígitos deben estar en el rango 0-255) y presentar el resultado en pantalla en forma hexadecimal. La presentación debe ser en la forma 0Xhhhhhhhh donde h son dígitos hexadecimales.\par
+	\section{Interpretación}
+	A partir del enunciado se interpreta lo siguiente:\par
+	\begin{itemize}
+	\item El programa debe recibir del usuario un número IP en formato “dotted-quad”, es decir, de la forma “xxx.yyy.zzz.uuu”.
+    \item Cada uno de estos campos debe estar entre 0 y 255.\par
+    \item La IP introducida debe ser una cadena de caracteres, ya que los puntos forman parte de ella y deben ser recibidos.
+    \item El número IP se recibe por línea de comando.
+    \item Errores posibles que deben ser detectados:
+    	\begin{itemize}
+    	\item Se ingresan letras u otros caracteres en lugar de números o puntos.
+        \item Se agregan más de cuatro campos. 
+        \item Se ingresa un campo mayor a 255.
+        \item Se inicia o se termina con un punto.
+    	\end{itemize}
+        
+    \item Una vez que se comprueba que no hay errores en la IP recibida, debe transformarse cada campo a binario. Cada campo tiene una longitud de 8 bits, generando en total una cadena de 32 bits, con los campos en binario concatenados. (Claro está, los puntos no se incluyen).Esto se puede lograr con la función sscanf().
+    \item Finalmente, el número IP debe presentarse en formato hexadecimal. Para ello, se usa la función printf(), que hace la transformación por su cuenta.
+	\end{itemize}
+	\clearpage
+\section{Resolución}
+La resolución propuesta en pseudocódigo es la siguiente:\par
+    \lstset{inputencoding=utf8/latin1, style = customc}
+    \lstinputlisting[language=C]{code.c}
+    Algunas aclaraciones finales:\par
+    \begin{itemize}
+    	\item Se usa una bandera para detectar si alguna de las verificaciones falla.\par
+    	\item Nos apoyamos en función isdigit para saber si los caracteres son números del [0-9].\par
+    	\item Para separar los campos (xxx, yyy, zzz, uuu) del string, y asignar sus valores a variables, se usa la función sscanf().\par
+    \end{itemize}
+\section{Bibliografía y más}
+Para la realización de esta actividad nos apoyamos en los manuales de C y las librerías asociadas. Junto con este informe se adjunta el programa solicitado y las librerías generadas.\par 
+Para la compilación de este programa usamos el compilador GCC en su version 10.2.0.\par
+ A la hora de compilar recomendamos situarse en directorio raíz del programa y usar el comando, "\textit{gcc -o leerIP leeIP.c Funciones/funciones.c}", si es que se encuentra en una distribución Linux.\par
+ Por último, creamos un \href{https://github.com/LucaPicc/SOyR}{\textit{repositorio en GitHub}} para los proyectos de la materia
+\end{document}
