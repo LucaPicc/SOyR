@@ -10,28 +10,31 @@
 # del TP1 de SOYR                            #
 #                                            #
 #--------------------------------------------#
+dir=$HOME/$1
+file=$HOME/$2
 
-
-if [ $# -eq 2 ];
+if [ $# -ne 2 ];
 then
-    dir=$HOME/$1
-    
+    echo Numero de argumentos erroneos
+elif [[ $1 =~ [./] || $2 =~ [./] ]];
+then
+    echo Caracteres no permitidos
+elif [ -d $dir ];
+then
+    echo El directorio no se puede crear ya que este ya existe!
+elif [ -f $file ];
+then
+    echo El archivo ya existe en $HOME
+else
+       
     mkdir $dir
 
-    cp /etc/*.conf $dir
+    find /etc/ -maxdepth 1 -name "*.conf" -perm -o=r -exec cp -a {} $dir \;
 
     chmod go-rwx $dir/??g*
     
-    ls -l $dir > $dir/intermedio
-    sed -i -e "1d" $dir/intermedio
-    
-    echo -e Primeros 5 archivos en orden creciente por tamaño \\n > $dir/$2
-    cat $dir/intermedio | sort -n -k 5 | head -n5 >> $dir/$2
-    echo -e \\n Ultimos 5 archivos ordenados alfabeticamente en orden decreciente \\n >> $dir/$2
-    cat $dir/intermedio | sort -f -r -k 9 | tail -n5  >> $dir/$2
-    
-    rm $dir/intermedio
-else
-    echo numero de argumentos erroneos
+    ls -l $dir | tail -n +2 | sort -n -k 5 | head -n 5 > $file
+    ls -l $dir | tail -n +2 | sort -f -r -k 9 | tail -n 5 >> $file 
+   
 fi
 
