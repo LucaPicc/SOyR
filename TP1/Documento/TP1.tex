@@ -11,7 +11,7 @@
 
 %Variables
 \newcommand{\materia}{SISTEMAS OPERATIVOS Y REDES 2021}
-\newcommand{\Date}{12 de Abril de 2021}
+\newcommand{\Date}{15 de Abril de 2021}
 \newcommand{\logofacu}{logo-unlp.png}
 \newcommand{\unlp}{logo-universidad}
 \newcommand{\ing}{logo-ing}
@@ -55,7 +55,7 @@
 	\centering                 
 	\includegraphics[width=0.8\textwidth]{\logofacu}\par\vspace{1cm}
 	{\scshape\LARGE \textbf{\materia}}\par\vspace{0.2cm}
-	{\Huge\bfseries\textcolor{colorfacu}{TP n°1 G10}}\par\vspace{1cm}
+	{\Huge\bfseries\textcolor{colorfacu}{TP n°1 version 2 G10}}\par\vspace{1cm}
 	{\large Moreyra Iñigo, Juan Martín
 66664/6}\par\vspace{0.2cm}
 	{\large Piccinini Luca 63207/0}\par\vspace{0.2cm}
@@ -68,28 +68,40 @@
 	\clearpage
 %---- Inicio de Documento-----------------%
 	\section{Introducción}
-	En este informe se detallará la resolución del siguiente enunciado. \par
-Escriba un script que cree un directorio con el nombre que se pasa como parámetro en la línea de comandos en el directorio que está almacenado en la variable HOME y copie en él, los archivos terminados en .conf que se encuentran el directorio /etc/
-Debe cambiar los permisos de los archivos copiados, cuya tercera letra sea una g, impidiendo el acceso total al resto del mundo y al grupo.\par
-Luego debe crear un archivo cuyo nombre también se pasa en la línea de comandos, y almacenar en el los primeros 5 archivos en orden de tamaño creciente y los últimos 5 archivos en orden alfabético decreciente.
+	En este informe se detallará la resolución del siguiente enunciado. 
+    \begin{itemize}
+    \item[1.] “Escriba un script que cree un directorio con el nombre que se pasa como parámetro en la línea de comandos en el directorio que está almacenado en la variable HOME y copie en él, los archivos terminados en ‘.conf’ que se encuentran el directorio /etc/.”
+    \item[2.] “Debe cambiar los permisos de los archivos copiados, cuya tercera letra sea una g, impidiendo el acceso total al resto del mundo y al grupo.”
+    \item[3.] “Luego debe crear un archivo cuyo nombre también se pasa en la línea de comandos, y almacenar en él los primeros 5 archivos en orden de tamaño creciente y los últimos 5 archivos en orden alfabético decreciente.”
+    \end{itemize}
 	\section{Interpretación}
-	Lo que se solicita interpretamos que es lo siguiente:
+	Del enunciado se interpreta lo siguiente:
 	\begin{itemize}
-		\item Debe realizarse un script en bash que reciba dos parámetros de entrada por línea de comandos.
-		\item El primer parámetro es el nombre dado al directorio creado en la variable HOME.
-		\item El segundo parámetro es el nombre del archivo que contendrá información recopilada más adelante en la resolución del problema. Este archivo, se guarda en el directorio creado anteriormente.
-		\item Una vez creado el directorio,  se copian todos los archivos con extensión “.conf” que se encuentran en el directorio /etc/. Para este punto consideramos ignorar el hecho de que el usuario no tendrá los permisos necesarios para copiar todos los archivos que cumplen la condición, por lo que solo se copiarán los archivos con los permisos válidos.
-		\item Luego, se cambian los permisos de todos aquellos archivos copiados cuya tercera letra es una “g”, impidiendo acceso total al resto del mundo y al grupo. Para esto, se usa el comando chmod.
-		\item En el archivo anteriormente mencionado (cuyo nombre es el segundo parámetro recibido), se escriben: 
-		\begin{itemize}
-			\item Los primeros 5 archivos del directorio creado en orden creciente de tamaño.
-			\item Los últimos 5 archivos del directorio creado en orden alfabético decreciente.
-		\end{itemize}
+	
+	
+    \item Debe realizarse un script en bash que reciba dos parámetros de entrada por línea de comandos.
+    \item El primer parámetro es el nombre dado al directorio creado en la variable HOME.
+    \item El segundo parámetro es el nombre del archivo que contendrá información recopilada más adelante en la resolución del problema. Este archivo, se guarda en el directorio contenido por HOME.
+    \item Es necesario que el script detecte errores que se puedan originar al recibir las entradas pasadas por el usuario. Los errores considerados son:
+    	\begin{itemize}
+    		\item Cantidad de argumentos pasados por línea de comandos incorrecta. Deben ser 2.
+            \item Caracteres no permitidos Estos serían el punto (“.”) y la barra (“/”).
+            \item El directorio que se intenta crear ya existe en HOME.
+            \item El archivo que se intenta crear ya existe en HOME.
+    	\end{itemize}
+            
+    \item Una vez que creado el directorio, a este se deben copiar todos los archivos con extensión “.conf” que se encuentran en el directorio /etc/. Para este punto consideramos ignorar el hecho de que el usuario no tendrá los permisos necesarios para copiar todos los archivos que cumplen la condición, por lo que solo se copiarán los archivos con los permisos válidos.
+    \item Se deben cambiar los permisos de todos aquellos archivos copiados cuya tercera letra es una “g”, impidiendo acceso total al resto del mundo y al grupo. Para esto, se usa el comando chmod.
+    \item En el archivo anteriormente mencionado (cuyo nombre es el segundo parámetro recibido), se escriben:
+    	\begin{itemize}
+            \item Del contenido del directorio listado en orden creciente de tamaño, los primeros 5 archivos (es decir, los 5 archivos de menor tamaño).
+            \item Del contenido del directorio listado alfabética y decrecientemente, los últimos 5 archivos. 	
+		\end{itemize}    	 
 	\end{itemize}
-	\clearpage
 	\subsection{Pseudocodigo}
 	\lstset{inputencoding=utf8/latin1, style = customc}
-    \lstinputlisting[language=C]{pseudocodigo.c}
+    \lstinputlisting[language=BASH]{pseudocodigo.c}
+    \clearpage
 	\section{Permisos en Linux}
 	En los sistemas GNU/Linux existe un sistema de permisos, que otorgan a un determinado usuario o conjunto de estos, el permiso de realizar un conjunto de acciones sobre un determinado archivo. Es importante recordar que todo en Linux es un archivo, ya sea un directorio, un módem, un teclado, etcétera, con lo que este sistema de permisos determina los privilegios de los usuarios sobre el conjunto del sistema.\par
 	\subsection{Niveles}
@@ -99,7 +111,6 @@ Luego debe crear un archivo cuyo nombre también se pasa en la línea de comando
 		\item Grupos, es un conjunto de usuarios.\par
 		\item Otros usuarios o resto del mundo, que, como el nombre indica, se refiere a los demás usuarios que nos son propietario o no pertenecen al grupo.
 	\end{itemize}
-	\clearpage
 	\subsection{Tipos de permisos}
 	Sobre un archivo existen tres tipos de permisos:
 	\begin{itemize}
@@ -137,7 +148,6 @@ Luego debe crear un archivo cuyo nombre también se pasa en la línea de comando
 		\caption{Captura comando \textit{ls -l} archivo especifico}
 	\end{figure}
 	Con lo cual podemos ver que el archivo Arduino es tipo directorio. Ahora para el directorio Arduino tenemos que, el propietario es el usuario luca y los grupos que tienen permisos asignados, es solo el grupo luca. El propietario tiene permisos de lectura, escritura y ejecución. Por el contrario, el grupo luca y el resto de usuario solo tiene permisos de lectura y ejecución.
-	\clearpage
 	\subsubsection{chmod}
 	Este comando o programa de línea de comando, permite el cambio de los permisos para los tres niveles de estos. Para este comando existen dos modos de uso, el modo carácter y el modo octal. Para el modo carácter debemos indicar a chmod el nivel sobre el que vamos a actuar, el modo en que vamos a modificar los permisos, los permisos a modificar y el archivo. Para esto tenemos las siguiente opciones.\par
 	 \begin{itemize}
